@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SiteSettings {
+  id                   String   @id @default("default")
+  name                 String
+  tagline              String
+  description          String
+  url                  String
+  location             String
+  phoneDisplay         String
+  phoneIntl            String
+  whatsapp             String
+  heroKicker           String
+  heroTitle            String
+  heroAccent           String
+  heroLead             String
+  heroImage            String
+  heroImageAlt         String
+  servicesEyebrow      String
+  servicesTitle        String
+  servicesDescription  String   @db.Text
+  portfolioEyebrow     String
+  portfolioTitle       String
+  portfolioDescription String   @db.Text
+  processEyebrow       String
+  processTitle         String
+  pricingEyebrow       String
+  pricingTitle         String
+  pricingDescription   String   @db.Text
+  pricingNote          String   @db.Text
+  aboutEyebrow         String
+  aboutTitle           String
+  aboutIntroTitle      String
+  aboutBody            String   @db.Text
+  aboutMission         String   @db.Text
+  aboutVision          String   @db.Text
+  contactEyebrow       String
+  contactTitle         String
+  contactDescription   String   @db.Text
+  contactResponse      String
+  ctaTitle             String
+  ctaBody              String
+  ctaLabel             String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Service {
+  id             String               @id @default(cuid())
+  slug           String               @unique
+  title          String
+  category       String
+  description    String
+  details        String               @db.Text
+  image          String
+  sortOrder      Int                  @default(0)
+  designs        Design[]
+  subcategories  ServiceSubcategory[]
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  @@index([sortOrder])
+}
+
+model ServiceSubcategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String
+  sortOrder Int      @default(0)
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  designs   Design[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([serviceId, slug])
+  @@index([serviceId])
+  @@index([sortOrder])
+}
+
+model Design {
+  id             String               @id @default(cuid())
+  slug           String               @unique
+  title          String
+  image          String
+  alt            String
+  featured       Boolean              @default(false)
+  sortOrder      Int                  @default(0)
+  serviceId      String
+  service        Service              @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  subcategoryId  String?
+  subcategory    ServiceSubcategory?  @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  @@index([serviceId])
+  @@index([subcategoryId])
+  @@index([featured])
+  @@index([sortOrder])
+}
+
+model PricePlan {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  summary   String
+  featured  Boolean  @default(false)
+  includes  String[]
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model ProcessStep {
+  id        String   @id @default(cuid())
+  step      String
+  title     String
+  body      String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}

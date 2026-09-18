@@ -1,0 +1,1646 @@
+/* =========================================================
+   GRAPHIC DESIGN BUSINESS WEBSITE
+   COMPLETE STYLE SHEET
+   ========================================================= */
+
+
+/* =========================================================
+   1. RESET & GLOBAL SETTINGS
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b0b0b;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+::selection {
+    background: #ffffff;
+    color: #000000;
+}
+
+
+/* =========================================================
+   2. CONTAINER
+   ========================================================= */
+
+.section,
+.navbar {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   3. NAVIGATION
+   ========================================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    z-index: 9999;
+
+    background: rgba(11, 11, 11, 0.92);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar {
+    min-height: 80px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+
+/* Logo */
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+}
+
+
+/* Navigation links */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    list-style: none;
+}
+
+.nav-links a {
+    position: relative;
+
+    color: #bdbdbd;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    padding: 10px 0;
+
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+
+/* Active page */
+
+.nav-links a.active {
+    color: #ffffff;
+}
+
+.nav-links a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 2px;
+
+    width: 100%;
+    height: 2px;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   4. BUTTONS
+   ========================================================= */
+
+.primary-btn,
+.secondary-btn,
+.order-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 0 24px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+/* Primary */
+
+.primary-btn {
+    background: #ffffff;
+    color: #000000;
+
+    border: 1px solid #ffffff;
+}
+
+.primary-btn:hover {
+    background: transparent;
+    color: #ffffff;
+
+    transform: translateY(-3px);
+}
+
+
+/* Secondary */
+
+.secondary-btn {
+    background: transparent;
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.secondary-btn:hover {
+    background: #ffffff;
+    color: #000000;
+
+    border-color: #ffffff;
+
+    transform: translateY(-3px);
+}
+
+
+/* Order */
+
+.order-btn {
+    background: #ffffff;
+    color: #000000;
+
+    min-height: 42px;
+    padding: 0 20px;
+}
+
+.order-btn:hover {
+    background: #dddddd;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   5. HERO SECTION
+   ========================================================= */
+
+.hero {
+    min-height: 100vh;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 150px 20px 90px;
+
+    display: grid;
+
+    grid-template-columns: 1.05fr 0.95fr;
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+.hero-text {
+    max-width: 650px;
+}
+
+.small-title {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    color: #aaaaaa;
+}
+
+.hero h1 {
+    margin: 20px 0;
+
+    font-size: clamp(45px, 6vw, 78px);
+
+    line-height: 0.98;
+
+    letter-spacing: -3px;
+}
+
+.hero h1 span {
+    display: block;
+}
+
+.hero-text > p:not(.small-title) {
+    max-width: 550px;
+
+    color: #a7a7a7;
+
+    font-size: 17px;
+}
+
+.hero-buttons {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    margin-top: 35px;
+}
+
+
+/* Hero image */
+
+.hero-image {
+    width: 100%;
+}
+
+.design-placeholder {
+    min-height: 540px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #151515,
+            #252525
+        );
+
+    border: 1px solid #333333;
+
+    color: #777777;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.design-placeholder::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    top: -100px;
+    right: -100px;
+}
+
+.design-placeholder::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    bottom: -80px;
+    left: -80px;
+}
+
+
+/* =========================================================
+   6. GENERAL SECTION
+   ========================================================= */
+
+.section {
+    padding: 110px 20px;
+}
+
+.section-title {
+    margin-bottom: 50px;
+}
+
+.section-title p {
+    color: #aaaaaa;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+.section-title h2 {
+    margin-top: 10px;
+
+    font-size: clamp(35px, 5vw, 52px);
+
+    line-height: 1.05;
+
+    letter-spacing: -1.5px;
+}
+
+
+/* =========================================================
+   7. PAGE HEADER
+   ========================================================= */
+
+.page-header {
+    min-height: 55vh;
+
+    padding: 170px 20px 90px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.page-header .small-title {
+    margin-bottom: 15px;
+}
+
+.page-header h1 {
+    font-size: clamp(50px, 8vw, 90px);
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+
+    margin-bottom: 20px;
+}
+
+.page-header > p:last-child {
+    max-width: 600px;
+
+    color: #999999;
+
+    font-size: 17px;
+}
+
+
+/* ================================
+   SERVICES SECTION
+================================ */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    position: relative;
+    min-height: 330px;
+    padding: 35px 30px;
+
+    display: flex;
+    align-items: flex-end;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background-color: #151515;
+
+    transition: transform 0.35s ease,
+                border-color 0.35s ease;
+}
+
+
+/* IMAGE — 25% OPACITY */
+
+.service-card::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.25;
+
+    z-index: -2;
+
+    transform: scale(1.03);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+/* DARK OVERLAY */
+
+.service-card::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.95),
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.25)
+    );
+
+    z-index: -1;
+}
+
+
+/* CONTENT */
+
+.service-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+
+/* WHITE LINE */
+
+.service-line {
+    display: block;
+
+    width: 50px;
+    height: 4px;
+
+    background: #ffffff;
+
+    margin-bottom: 20px;
+}
+
+
+/* TITLE */
+
+.service-card h3 {
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+
+/* DESCRIPTION */
+
+.service-card p {
+    margin: 0;
+
+    color: #b8b8b8;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* HOVER */
+
+.service-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.service-card:hover::before {
+    opacity: 0.35;
+    transform: scale(1.08);
+}
+
+
+/* BUTTON */
+
+.center-button {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 45px;
+}/* =========================
+   SERVICES SECTION
+========================= */
+
+.services-section {
+    padding: 100px 8%;
+    background: #061633;
+    color: white;
+    text-align: center;
+}
+
+.services-section .section-label {
+    color: #00aaff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.services-section h2 {
+    font-size: 48px;
+    margin: 0 0 20px;
+    color: #ffffff;
+}
+
+.services-section .section-description {
+    max-width: 750px;
+    margin: 0 auto 55px;
+    color: #b7c7df;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* Service cards */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: linear-gradient(
+        145deg,
+        #102b58,
+        #071b3d
+    );
+
+    border: 1px solid rgba(0, 153, 255, 0.35);
+    border-radius: 18px;
+    padding: 35px 30px;
+    text-align: left;
+
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    border-color: #009dff;
+    box-shadow: 0 15px 40px rgba(0, 153, 255, 0.18);
+}
+
+/* Icons */
+
+.service-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #007bff, #00b7ff);
+    color: white;
+
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+/* Card content */
+
+.service-content h3 {
+    color: white;
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.service-content p {
+    color: #b8c8df;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.service-content a {
+    color: #00aaff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.service-content a:hover {
+    color: white;
+}
+
+.service-content a::after {
+    content: " →";
+    font-size: 20px;
+}
+
+/* View all services */
+
+.view-all-services {
+    display: inline-block;
+    margin-top: 45px;
+    padding: 14px 30px;
+
+    background: linear-gradient(135deg, #007bff, #00aaff);
+    color: white;
+
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.view-all-services:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-section h2 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 600px) {
+    .services-section {
+        padding: 70px 5%;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-section h2 {
+        font-size: 32px;
+    }
+
+    .services-section .section-description {
+        font-size: 16px;
+    }
+}
+
+
+
+/* =========================================================
+   9. CENTER BUTTON
+   ========================================================= */
+
+.center-button {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 50px;
+}
+@media (max-width: 1000px) {
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-card {
+        min-height: 320px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .service-card {
+        min-height: 300px;
+        padding: 30px 25px;
+    }
+
+    .service-card h3 {
+        font-size: 24px;
+    }
+
+    .service-card p {
+        font-size: 14px;
+    }
+
+}
+
+/* =========================================================
+   10. PORTFOLIO
+   ========================================================= */
+
+.portfolio-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.portfolio-item {
+    min-height: 380px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #171717,
+            #252525
+        );
+
+    border: 1px solid #303030;
+
+    border-radius: 7px;
+
+    color: #888888;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.portfolio-item:hover {
+    transform: scale(1.02);
+
+    border-color: #777777;
+}
+
+
+/* Decorative shapes */
+
+.portfolio-item::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    top: -60px;
+    right: -60px;
+}
+
+.portfolio-item::after {
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    bottom: -50px;
+    left: -50px;
+
+    transform: rotate(45deg);
+}
+
+
+/* =========================================================
+   11. PROCESS / HOW IT WORKS
+   ========================================================= */
+
+.process-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 25px;
+}
+
+.process-grid > div {
+    padding: 30px 0;
+
+    border-top: 1px solid #333333;
+}
+
+.process-grid span {
+    font-size: 38px;
+
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+.process-grid h3 {
+    margin: 15px 0 10px;
+
+    font-size: 19px;
+}
+
+.process-grid p {
+    color: #999999;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   12. CTA
+   ========================================================= */
+
+.cta {
+    padding: 110px 20px;
+
+    text-align: center;
+
+    background: #151515;
+
+    border-top: 1px solid #292929;
+
+    border-bottom: 1px solid #292929;
+}
+
+.cta h2 {
+    font-size: clamp(35px, 6vw, 60px);
+
+    line-height: 1;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 15px;
+}
+
+.cta p {
+    color: #999999;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   13. PRICING
+   ========================================================= */
+
+.pricing-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.price-card {
+    padding: 45px 35px;
+
+    background: #151515;
+
+    border: 1px solid #303030;
+
+    border-radius: 8px;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.price-card:hover {
+    transform: translateY(-7px);
+
+    border-color: #666666;
+}
+
+.price-card h3 {
+    font-size: 21px;
+}
+
+.price-card h4 {
+    margin: 20px 0;
+
+    font-size: 38px;
+
+    letter-spacing: -1px;
+}
+
+.price-card p {
+    color: #999999;
+
+    margin-bottom: 30px;
+}
+
+.price-card.featured {
+    border: 2px solid #ffffff;
+
+    position: relative;
+}
+
+.price-card.featured::before {
+    content: "POPULAR";
+
+    position: absolute;
+
+    top: -13px;
+    left: 25px;
+
+    padding: 5px 12px;
+
+    background: #ffffff;
+
+    color: #000000;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    border-radius: 3px;
+}
+
+.pricing-note {
+    text-align: center;
+
+    margin-top: 35px;
+
+    color: #777777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   14. ABOUT
+   ========================================================= */
+
+.about-section {
+    max-width: 1000px;
+}
+
+.about-text {
+    max-width: 850px;
+}
+
+.about-text h2 {
+    margin: 20px 0 30px;
+
+    font-size: clamp(38px, 6vw, 65px);
+
+    line-height: 1.02;
+
+    letter-spacing: -2px;
+}
+
+.about-text h3 {
+    margin-top: 45px;
+
+    margin-bottom: 10px;
+
+    font-size: 24px;
+}
+
+.about-text p {
+    max-width: 800px;
+
+    color: #999999;
+
+    font-size: 17px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   15. CONTACT
+   ========================================================= */
+
+.contact-section {
+    text-align: center;
+
+    max-width: 900px;
+}
+
+.contact-info {
+    margin-bottom: 40px;
+}
+
+.contact-info p {
+    margin: 8px 0;
+
+    color: #999999;
+
+    font-size: 17px;
+}
+
+.contact-info strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   16. ORDER PAGE
+   ========================================================= */
+
+.order-section {
+    max-width: 850px;
+
+    text-align: center;
+}
+
+.order-box {
+    padding: 70px 40px;
+
+    background: #151515;
+
+    border: 1px solid #303030;
+
+    border-radius: 10px;
+}
+
+.order-box h2 {
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+.order-box p {
+    color: #999999;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================================================
+   17. CYRIL IMAGE
+   ========================================================= */
+
+.cyril-image {
+    width: 100%;
+
+    max-width: 500px;
+
+    height: 500px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+}
+
+.cyril-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* =========================================================
+   18. FOOTER
+   ========================================================= */
+
+footer {
+    padding: 60px 20px;
+
+    text-align: center;
+
+    background: #050505;
+
+    border-top: 1px solid #1c1c1c;
+}
+
+footer h3 {
+    font-size: 20px;
+
+    letter-spacing: 1px;
+}
+
+footer p {
+    color: #777777;
+
+    margin-top: 10px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   19. WHATSAPP FLOATING BUTTON
+   ========================================================= */
+
+.whatsapp-button {
+    position: fixed;
+
+    right: 25px;
+
+    bottom: 25px;
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #25D366;
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    z-index: 9998;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.35);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    transform: scale(1.1);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   20. TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 13px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 35px;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================================================
+   21. MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* Navigation */
+
+    header {
+        position: relative;
+    }
+
+    .navbar {
+        min-height: auto;
+
+        padding: 20px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .logo {
+        width: 100%;
+
+        justify-content: center;
+
+        text-align: center;
+
+        margin-bottom: 5px;
+    }
+
+    .nav-links {
+        width: 100%;
+
+        display: flex;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 12px 18px;
+    }
+
+    .nav-links a {
+        font-size: 12px;
+    }
+
+    .order-btn {
+        margin-top: 5px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        min-height: auto;
+
+        padding: 80px 20px;
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+        text-align: center;
+    }
+
+    .hero-text {
+        margin: auto;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero-text > p:not(.small-title) {
+        margin: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .design-placeholder {
+        min-height: 380px;
+    }
+
+
+    /* Sections */
+
+    .section {
+        padding: 80px 20px;
+    }
+
+    .section-title {
+        text-align: center;
+
+        margin-bottom: 35px;
+    }
+
+
+    /* Services */
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-card {
+        min-height: 330px;
+    }
+
+
+    /* Portfolio */
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-item {
+        min-height: 400px;
+    }
+
+
+    /* Process */
+
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Pricing */
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Page header */
+
+    .page-header {
+        min-height: 45vh;
+
+        padding: 80px 20px;
+    }
+
+    .page-header h1 {
+        letter-spacing: -2px;
+    }
+
+
+    /* About */
+
+    .about-section {
+        text-align: center;
+    }
+
+    .about-text {
+        margin: auto;
+    }
+
+
+    /* CTA */
+
+    .cta {
+        padding: 80px 20px;
+    }
+
+
+    /* Order */
+
+    .order-box {
+        padding: 50px 25px;
+    }
+
+    .order-box h2 {
+        font-size: 30px;
+    }
+
+
+    /* Cyril image */
+
+    .cyril-image {
+        height: 400px;
+    }
+
+
+    /* WhatsApp */
+
+    .whatsapp-button {
+        right: 18px;
+
+        bottom: 18px;
+
+        width: 52px;
+
+        height: 52px;
+    }
+}
+
+
+/* =========================================================
+   22. SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .navbar {
+        padding: 17px 12px;
+    }
+
+    .nav-links {
+        gap: 9px 13px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .order-btn {
+        min-height: 38px;
+
+        padding: 0 16px;
+
+        font-size: 12px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        padding-top: 60px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+
+    .design-placeholder {
+        min-height: 320px;
+
+        font-size: 17px;
+    }
+
+
+    /* Services */
+
+    .service-card {
+        min-height: 310px;
+
+        padding: 30px 25px;
+    }
+
+    .service-card h3 {
+        font-size: 24px;
+    }
+
+    .service-card p {
+        font-size: 15px;
+    }
+
+
+    /* Portfolio */
+
+    .portfolio-item {
+        min-height: 330px;
+    }
+
+
+    /* Page header */
+
+    .page-header {
+        padding-top: 70px;
+    }
+
+    .page-header h1 {
+        font-size: 50px;
+    }
+
+
+    /* About */
+
+    .about-text h2 {
+        font-size: 40px;
+    }
+
+
+    /* Pricing */
+
+    .price-card {
+        padding: 35px 25px;
+    }
+
+
+    /* Order */
+
+    .order-box {
+        padding: 40px 20px;
+    }
+
+
+    /* Cyril */
+
+    .cyril-image {
+        height: 330px;
+    }
+}
