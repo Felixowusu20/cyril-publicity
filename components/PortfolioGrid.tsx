@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { CoverImage } from "@/components/CoverImage";
 import type { PortfolioItem } from "@/lib/data";
 
 export function PortfolioGrid({ items }: { items: PortfolioItem[] }) {
@@ -6,7 +6,7 @@ export function PortfolioGrid({ items }: { items: PortfolioItem[] }) {
     <div className="portfolio-grid">
       {items.map((item) => (
         <article key={item.slug} className="portfolio-item">
-          <Image src={item.image} alt={item.alt} fill sizes="(max-width: 768px) 100vw, 33vw" />
+          <CoverImage src={item.image} alt={item.alt} />
           <div className="portfolio-caption">
             {item.title}
             <span>{item.category}</span>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "@/lib/site";
 
 export function Logo({ name = site.name }: { name?: string }) {
@@ -6,7 +5,7 @@ export function Logo({ name = site.name }: { name?: string }) {
   const split = name.match(/^(Cyril)(Publicity)$/i);
 
   return (
-    <Link href="/" className="logo" aria-label={`${name} home`}>
+    <a href="/" className="logo" aria-label={`${name} home`}>
       <span className="logo-mark" aria-hidden="true">
         {mark}
       </span>
@@ -20,6 +19,6 @@ export function Logo({ name = site.name }: { name?: string }) {
           name
         )}
       </span>
-    </Link>
+    </a>
   );
 }

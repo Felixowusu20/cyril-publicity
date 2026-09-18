@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CoverImage } from "@/components/CoverImage";
 import type { Service } from "@/lib/data";
 
 type ServiceCardProps = {
@@ -8,10 +9,8 @@ type ServiceCardProps = {
 
 export function ServiceCard({ service, href }: ServiceCardProps) {
   const content = (
-    <article
-      className="service-card"
-      style={{ backgroundImage: `url('${service.image}')` }}
-    >
+    <article className="service-card">
+      <CoverImage src={service.image} alt="" className="service-card-image" />
       <div className="service-content">
         <span className="service-line" />
         <h3>{service.title}</h3>

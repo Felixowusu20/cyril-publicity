@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { CoverImage } from "@/components/CoverImage";
 import { Cta } from "@/components/Cta";
 import { DesignGallery } from "@/components/DesignGallery";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -39,13 +39,10 @@ export default async function HomePage() {
         </div>
 
         <div className="cyril-image">
-          <Image
+          <CoverImage
             src={settings.heroImage}
             alt={settings.heroImageAlt}
-            fill
             priority
-            unoptimized={!settings.heroImage.startsWith("/")}
-            sizes="(max-width: 768px) 48vw, 50vw"
           />
         </div>
       </section>

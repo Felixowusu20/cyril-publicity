@@ -36,8 +36,10 @@ export function Header({ siteName }: { siteName?: string }) {
   }, [pathname]);
 
   useEffect(() => {
+    document.body.classList.toggle("menu-open", open);
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
+      document.body.classList.remove("menu-open");
       document.body.style.overflow = "";
     };
   }, [open]);
@@ -46,8 +48,15 @@ export function Header({ siteName }: { siteName?: string }) {
     function onResize() {
       if (window.innerWidth > 960) setOpen(false);
     }
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
   return (
@@ -71,7 +80,6 @@ export function Header({ siteName }: { siteName?: string }) {
                   <Link
                     href={link.href}
                     className={active ? "active" : undefined}
-                    onClick={() => setOpen(false)}
                   >
                     {link.label}
                   </Link>
@@ -80,7 +88,7 @@ export function Header({ siteName }: { siteName?: string }) {
             })}
           </ul>
           <div className="mobile-order">
-            <OrderLink onClick={() => setOpen(false)} />
+            <OrderLink />
           </div>
         </div>
 
@@ -94,13 +102,21 @@ export function Header({ siteName }: { siteName?: string }) {
             className={`nav-toggle${open ? " open" : ""}`}
             aria-expanded={open}
             aria-controls="primary-navigation"
+            aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
-            <span />
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            <span className="nav-toggle-icon" aria-hidden="true" />
           </button>
         </div>
       </nav>
+      {open ? (
+        <button
+          type="button"
+          className="nav-backdrop"
+          aria-label="Close menu"
+          onClick={() => setOpen(false)}
+        />
+      ) : null}
     </header>
   );
 }

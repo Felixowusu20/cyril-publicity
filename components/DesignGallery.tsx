@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { CoverImage } from "@/components/CoverImage";
 import type { PortfolioItem } from "@/lib/data";
 
 type GalleryItem = PortfolioItem & {
@@ -61,13 +61,7 @@ export function DesignGallery({
             className="portfolio-item"
             onClick={() => setActiveIndex(index)}
           >
-            <Image
-              src={item.image}
-              alt={item.alt}
-              fill
-              unoptimized={!item.image.startsWith("/")}
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
+            <CoverImage src={item.image} alt={item.alt} />
             <div className="portfolio-caption">
               {item.title}
               <span>View fullscreen</span>
@@ -129,14 +123,7 @@ export function DesignGallery({
 
           <div className="lightbox-stage" onClick={(event) => event.stopPropagation()}>
             <div className="lightbox-image">
-                <Image
-                  src={activeItem.image}
-                  alt={activeItem.alt}
-                  fill
-                  sizes="100vw"
-                  priority
-                  unoptimized={!activeItem.image.startsWith("/")}
-                />
+                <CoverImage src={activeItem.image} alt={activeItem.alt} priority />
             </div>
             <p className="lightbox-caption">
               {activeItem.title}

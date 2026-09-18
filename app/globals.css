@@ -80,6 +80,16 @@ img {
   display: block;
 }
 
+.cover-image,
+.service-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
 button,
 input,
 textarea,
@@ -150,19 +160,21 @@ header {
 
 .nav-toggle {
   display: none;
+  position: relative;
+  z-index: 10002;
   width: 44px;
   height: 44px;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: var(--bg-elevated);
   border: 1px solid var(--border);
   color: var(--text);
   cursor: pointer;
 }
 
-.nav-toggle span,
-.nav-toggle span::before,
-.nav-toggle span::after {
+.nav-toggle-icon,
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
   display: block;
   width: 18px;
   height: 2px;
@@ -171,31 +183,31 @@ header {
   transition: transform 0.2s ease, top 0.2s ease, background 0.2s ease;
 }
 
-.nav-toggle span::before,
-.nav-toggle span::after {
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
   content: "";
   position: absolute;
   left: 0;
 }
 
-.nav-toggle span::before {
-  top: -7px;
+.nav-toggle-icon::before {
+  top: -6px;
 }
 
-.nav-toggle span::after {
-  top: 7px;
+.nav-toggle-icon::after {
+  top: 6px;
 }
 
-.nav-toggle.open span {
+.nav-toggle.open .nav-toggle-icon {
   background: transparent;
 }
 
-.nav-toggle.open span::before {
+.nav-toggle.open .nav-toggle-icon::before {
   top: 0;
   transform: rotate(45deg);
 }
 
-.nav-toggle.open span::after {
+.nav-toggle.open .nav-toggle-icon::after {
   top: 0;
   transform: rotate(-45deg);
 }
@@ -483,26 +495,19 @@ header {
   border-radius: 15px;
   border: 1px solid var(--border);
   background-color: var(--bg-elevated);
-  background-size: cover;
-  background-position: center;
   transition:
     transform 0.35s ease,
     border-color 0.35s ease;
 }
 
-.service-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: inherit;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.28;
+.service-card-image {
   z-index: -2;
   transform: scale(1.03);
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-card-image {
+  transform: scale(1.08);
 }
 
 .service-card::after {
@@ -559,11 +564,6 @@ header {
 .service-card:hover {
   transform: translateY(-8px);
   border-color: var(--text-nav);
-}
-
-.service-card:hover::before {
-  opacity: 0.4;
-  transform: scale(1.08);
 }
 
 .center-button {
@@ -1028,6 +1028,11 @@ footer p {
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
 }
 
+body.menu-open .whatsapp-button {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1043,9 +1048,12 @@ footer p {
 @media (max-width: 960px) {
   header {
     position: fixed;
+    overflow: visible;
   }
 
   .navbar {
+    position: relative;
+    z-index: 10003;
     min-height: 68px;
     padding: 10px 16px;
     gap: 10px;
@@ -1059,6 +1067,16 @@ footer p {
     display: none;
   }
 
+  .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    border: 0;
+    background: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+  }
+
   .nav-panel {
     display: none;
     position: fixed;
@@ -1066,7 +1084,7 @@ footer p {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 9998;
+    z-index: 10001;
     flex: none;
     flex-direction: column;
     align-items: stretch;
@@ -1074,6 +1092,7 @@ footer p {
     padding: 8px 20px 32px;
     background: var(--bg);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav-panel.open {
@@ -1466,6 +1485,7 @@ footer p {
 
 .lightbox-image img {
   object-fit: contain;
+  background: transparent;
 }
 
 .lightbox-caption {
