@@ -4,7 +4,12 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
-  serverExternalPackages: ["pg", "@prisma/adapter-pg", "@prisma/client"],
+  serverExternalPackages: [
+    "pg",
+    "@prisma/adapter-pg",
+    "@prisma/client",
+    "cloudinary",
+  ],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**" },

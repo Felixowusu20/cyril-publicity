@@ -9,6 +9,32 @@ type GalleryItem = {
   title: string;
 };
 
+async function uploadOne(file: File): Promise<GalleryItem> {
+  const body = new FormData();
+  body.append("file", file);
+  const response = await fetch("/api/admin/upload", {
+    method: "POST",
+    body,
+  });
+
+  let data: { items?: GalleryItem[]; error?: string } = {};
+  try {
+    data = (await response.json()) as typeof data;
+  } catch {
+    throw new Error(
+      response.ok
+        ? "Upload returned an invalid response."
+        : `Upload failed (${response.status}).`,
+    );
+  }
+
+  if (!response.ok || !data.items?.[0]) {
+    throw new Error(data.error || "Upload failed.");
+  }
+
+  return data.items[0];
+}
+
 export function GalleryBatchForm({
   serviceId,
   subcategories = [],
@@ -20,30 +46,40 @@ export function GalleryBatchForm({
 }) {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [status, setStatus] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   async function onFiles(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files || []);
     if (files.length === 0) return;
 
-    setStatus(`Uploading ${files.length} ${files.length === 1 ? "image" : "images"}…`);
-    const body = new FormData();
-    files.forEach((file) => body.append("file", file));
-    const response = await fetch("/api/admin/upload", {
-      method: "POST",
-      body,
-    });
-    const data = (await response.json()) as {
-      items?: GalleryItem[];
-      error?: string;
-    };
-    if (!response.ok || !data.items?.length) {
-      setStatus(data.error || "Upload failed.");
-      return;
-    }
+    setUploading(true);
+    const uploaded: GalleryItem[] = [];
 
-    setItems((current) => [...current, ...data.items!]);
-    setStatus(`${data.items.length} ${data.items.length === 1 ? "image" : "images"} ready.`);
-    event.target.value = "";
+    try {
+      for (let index = 0; index < files.length; index += 1) {
+        setStatus(`Uploading ${index + 1} of ${files.length}…`);
+        uploaded.push(await uploadOne(files[index]!));
+      }
+
+      setItems((current) => [...current, ...uploaded]);
+      setStatus(
+        `${uploaded.length} ${uploaded.length === 1 ? "image" : "images"} ready.`,
+      );
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Upload failed.";
+      if (uploaded.length > 0) {
+        setItems((current) => [...current, ...uploaded]);
+        setStatus(
+          `${uploaded.length} uploaded, then failed: ${message}`,
+        );
+      } else {
+        setStatus(message);
+      }
+    } finally {
+      setUploading(false);
+      event.target.value = "";
+    }
   }
 
   function updateTitle(index: number, title: string) {
@@ -82,7 +118,13 @@ export function GalleryBatchForm({
       )}
       <label className="admin-image-field">
         Choose several images
-        <input type="file" accept="image/*" multiple onChange={onFiles} />
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          disabled={uploading}
+          onChange={onFiles}
+        />
         {status ? <small>{status}</small> : null}
       </label>
       {items.length > 0 ? (
@@ -104,6 +146,7 @@ export function GalleryBatchForm({
                 type="button"
                 className="admin-text-btn"
                 onClick={() => removeItem(index)}
+                disabled={uploading}
               >
                 Remove
               </button>
@@ -119,7 +162,7 @@ export function GalleryBatchForm({
       <button
         type="submit"
         className="primary-btn"
-        disabled={items.length === 0}
+        disabled={items.length === 0 || uploading}
       >
         {items.length === 0
           ? "Add gallery images"
