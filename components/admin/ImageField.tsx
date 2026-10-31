@@ -11,24 +11,45 @@ type ImageFieldProps = {
 export function ImageField({ name, label, defaultValue = "" }: ImageFieldProps) {
   const [value, setValue] = useState(defaultValue);
   const [status, setStatus] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   async function onFile(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    setUploading(true);
     setStatus("Uploading…");
-    const body = new FormData();
-    body.append("file", file);
-    const response = await fetch("/api/admin/upload", {
-      method: "POST",
-      body,
-    });
-    const data = (await response.json()) as { url?: string; error?: string };
-    if (!response.ok || !data.url) {
-      setStatus(data.error || "Upload failed.");
-      return;
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const response = await fetch("/api/admin/upload", {
+        method: "POST",
+        body,
+      });
+
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = (await response.json()) as typeof data;
+      } catch {
+        throw new Error(
+          response.ok
+            ? "Upload returned an invalid response."
+            : `Upload failed (${response.status}).`,
+        );
+      }
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Upload failed.");
+      }
+
+      setValue(data.url);
+      setStatus("Image uploaded.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+      event.target.value = "";
     }
-    setValue(data.url);
-    setStatus("Image uploaded.");
   }
 
   return (
@@ -47,7 +68,12 @@ export function ImageField({ name, label, defaultValue = "" }: ImageFieldProps) 
         onChange={(event) => setValue(event.target.value)}
         placeholder="/images/example.png or https://…"
       />
-      <input type="file" accept="image/*" onChange={onFile} />
+      <input
+        type="file"
+        accept="image/*"
+        disabled={uploading}
+        onChange={onFile}
+      />
       {status ? <small>{status}</small> : null}
     </label>
   );
