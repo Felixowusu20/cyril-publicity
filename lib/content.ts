@@ -210,7 +210,7 @@ export async function getDesigns(): Promise<DesignRecord[]> {
 
   try {
     const rows = await prisma.design.findMany({
-      orderBy: { sortOrder: "asc" },
+      orderBy: [{ createdAt: "desc" }, { sortOrder: "desc" }],
       include: { service: true, subcategory: true },
     });
     if (rows.length === 0) {

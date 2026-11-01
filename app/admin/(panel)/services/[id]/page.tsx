@@ -21,7 +21,7 @@ export default async function EditServicePage({ params }: PageProps) {
         include: {
           subcategories: { orderBy: { sortOrder: "asc" } },
           designs: {
-            orderBy: { sortOrder: "asc" },
+            orderBy: [{ createdAt: "desc" }, { sortOrder: "desc" }],
             include: { subcategory: true },
           },
         },

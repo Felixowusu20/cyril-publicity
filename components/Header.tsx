@@ -27,12 +27,43 @@ function OrderLink({ onClick }: { onClick?: () => void }) {
   );
 }
 
+function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname();
+
+  return (
+    <ul className="nav-links">
+      {navLinks.map((link) => {
+        const active =
+          link.href === "/"
+            ? pathname === "/"
+            : pathname.startsWith(link.href);
+
+        return (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={active ? "active" : undefined}
+              onClick={onNavigate}
+            >
+              {link.label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function Header({ siteName }: { siteName?: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  function closeMenu() {
     setOpen(false);
+  }
+
+  useEffect(() => {
+    closeMenu();
   }, [pathname]);
 
   useEffect(() => {
@@ -46,10 +77,10 @@ export function Header({ siteName }: { siteName?: string }) {
 
   useEffect(() => {
     function onResize() {
-      if (window.innerWidth > 960) setOpen(false);
+      if (window.innerWidth > 960) closeMenu();
     }
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeMenu();
     }
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
@@ -60,63 +91,55 @@ export function Header({ siteName }: { siteName?: string }) {
   }, []);
 
   return (
-    <header>
-      <nav className="navbar" aria-label="Main">
-        <Logo name={siteName} />
+    <>
+      <header>
+        <nav className="navbar" aria-label="Main">
+          <Logo name={siteName} />
 
-        <div
-          id="primary-navigation"
-          className={`nav-panel${open ? " open" : ""}`}
-        >
-          <ul className="nav-links">
-            {navLinks.map((link) => {
-              const active =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href);
+          <div className="nav-panel nav-panel-desktop">
+            <NavLinks />
+          </div>
 
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={active ? "active" : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="nav-actions">
+            <ThemeToggle />
+            <div className="desktop-order">
+              <OrderLink />
+            </div>
+            <button
+              type="button"
+              className={`nav-toggle${open ? " open" : ""}`}
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((value) => !value)}
+            >
+              <span className="nav-toggle-icon" aria-hidden="true" />
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Outside <header> so backdrop-filter cannot clip the drawer on iOS. */}
+      <div
+        id="mobile-navigation"
+        className={`nav-drawer${open ? " open" : ""}`}
+        aria-hidden={!open}
+      >
+        <div className="nav-drawer-inner">
+          <NavLinks onNavigate={closeMenu} />
           <div className="mobile-order">
-            <OrderLink />
+            <OrderLink onClick={closeMenu} />
           </div>
         </div>
-
-        <div className="nav-actions">
-          <ThemeToggle />
-          <div className="desktop-order">
-            <OrderLink />
-          </div>
-          <button
-            type="button"
-            className={`nav-toggle${open ? " open" : ""}`}
-            aria-expanded={open}
-            aria-controls="primary-navigation"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((value) => !value)}
-          >
-            <span className="nav-toggle-icon" aria-hidden="true" />
-          </button>
-        </div>
-      </nav>
+      </div>
       {open ? (
         <button
           type="button"
           className="nav-backdrop"
           aria-label="Close menu"
-          onClick={() => setOpen(false)}
+          onClick={closeMenu}
         />
       ) : null}
-    </header>
+    </>
   );
 }
