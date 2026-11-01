@@ -147,7 +147,19 @@ export async function saveDesign(formData: FormData) {
   if (id) {
     await prisma.design.update({ where: { id }, data });
   } else {
-    await prisma.design.create({ data });
+    const lowest = await prisma.design.findFirst({
+      where: { serviceId: data.serviceId },
+      orderBy: { sortOrder: "asc" },
+      select: { sortOrder: true },
+    });
+    await prisma.design.create({
+      data: {
+        ...data,
+        sortOrder: Number.isFinite(data.sortOrder) && text(formData, "sortOrder")
+          ? data.sortOrder
+          : (lowest?.sortOrder ?? 0) - 1,
+      },
+    });
   }
   revalidateSite();
   redirect(returnTo.startsWith("/admin") ? returnTo : "/admin/portfolio");
@@ -172,6 +184,13 @@ export async function saveGalleryBatch(formData: FormData) {
   async function createBatch() {
     const prisma = await db();
     const existingCount = await prisma.design.count({ where: { serviceId } });
+    const lowestSort = await prisma.design.findFirst({
+      where: { serviceId },
+      orderBy: { sortOrder: "asc" },
+      select: { sortOrder: true },
+    });
+    // Put new uploads first: lower sortOrder + newest createdAt.
+    const baseSort = (lowestSort?.sortOrder ?? 0) - images.length;
     const usedSlugs = new Set(
       (await prisma.design.findMany({ select: { slug: true } })).map((row) => row.slug),
     );
@@ -189,7 +208,7 @@ export async function saveGalleryBatch(formData: FormData) {
         image,
         alt: title,
         featured: false,
-        sortOrder: existingCount + index,
+        sortOrder: baseSort + index,
         serviceId,
         subcategoryId,
       };
